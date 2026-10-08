@@ -10,7 +10,7 @@ const TRAITS = [['Background', 'Ink', '12%'], ['Tile', 'Black giwa', '4%'], ['Se
 export default function Item() {
   const { slug, id } = useParams();
   const c = bySlug[slug];
-  const { address, connect } = useWallet();
+  const { address, connect, addOwned } = useWallet();
   const [step, setStep] = useState('idle');
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const t = useRef();
@@ -20,9 +20,9 @@ export default function Item() {
   const price = +(c.floor * 1.08).toFixed(3);
   const me = address ? short(address) : 'you';
   const buy = async () => {
-    if (!address) { await connect(); return; }
+    if (!address) { const ok = await connect(); if (!ok) return; }
     setStep('pending');
-    t.current = setTimeout(() => setStep('done'), 1900); // TODO: call marketplace contract
+    t.current = setTimeout(() => { addOwned([{ slug, id: Number(id), collection: c.name, price, seed: c.seed * 100 + Number(id) % 50 }]); setStep('done'); }, 1900); // TODO: call marketplace contract
   };
   const onMove = e => {
     const r = e.currentTarget.getBoundingClientRect();

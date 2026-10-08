@@ -9,6 +9,7 @@ import Collection from './pages/Collection.jsx';
 import Item from './pages/Item.jsx';
 import Launchpad from './pages/Launchpad.jsx';
 import Explore from './pages/Explore.jsx';
+import Profile from './pages/Profile.jsx';
 import NotFound from './pages/NotFound.jsx';
 import { WalletProvider } from './lib/wallet.jsx';
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/collection/:slug" element={<Collection />} />
           <Route path="/item/:slug/:id" element={<Item />} />
           <Route path="/launchpad" element={<Launchpad />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

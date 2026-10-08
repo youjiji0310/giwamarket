@@ -15,7 +15,7 @@ const PHASES = [
 
 export default function Launchpad() {
   const d = drops[0];
-  const { address, connect } = useWallet();
+  const { address, connect, addOwned } = useWallet();
   const time = useCountdown(d.endsInH);
   const [qty, setQty] = useState(1);
   const [minted, setMinted] = useState(d.minted);
@@ -26,9 +26,12 @@ export default function Launchpad() {
   const pct = Math.round((minted / d.supply) * 100);
 
   const mint = async () => {
-    if (!address) { await connect(); return; }
+    if (!address) { const ok = await connect(); if (!ok) return; }
     setStep('pending');
-    t.current = setTimeout(() => { setMinted(m => Math.min(d.supply, m + qty)); setLast(qty); setStep('done'); }, 1900); // TODO: call drop contract
+    t.current = setTimeout(() => {
+      addOwned(Array.from({ length: qty }, (_, k) => ({ slug: d.slug, id: minted + k + 1, collection: d.title, price: null, seed: d.seed * 10 + minted + k })));
+      setMinted(m => Math.min(d.supply, m + qty)); setLast(qty); setStep('done');
+    }, 1900); // TODO: call drop contract
   };
 
   return (
