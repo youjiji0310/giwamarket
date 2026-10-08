@@ -4,8 +4,6 @@ import Reveal from '../components/Reveal.jsx';
 import { drops, eth, num } from '../lib/data.js';
 import { useCountdown } from '../lib/hooks.js';
 import { useWallet } from '../lib/wallet.jsx';
-import Lines from '../components/Lines.jsx';
-import Magnetic from '../components/Magnetic.jsx';
 
 const PHASES = [
   { name: 'Allowlist', meta: 'Series I holders · 0.015 ETH · 2 max', status: 'Closed' },
@@ -45,7 +43,7 @@ export default function Launchpad() {
 
         <Reveal className="lp-panel" delay={120}>
           <span className="eyebrow">Launchpad · {d.creator}</span>
-          <Lines as="h1" className="h1" lines={[d.title.replace(/ II$/, ''), <em>Series II</em>]} />
+          <h1 className="h1">{d.title.replace(/ II$/, '')} <em>II</em></h1>
           <p className="lead">The second series of guardians. {num(d.supply)} pieces. Series I holders received allowlist access.</p>
 
           <div className="row-between small"><span><b>{pct}%</b> minted</span><span className="mono muted">{num(minted)} / {num(d.supply)}</span></div>

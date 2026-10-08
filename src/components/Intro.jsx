@@ -2,38 +2,23 @@ import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 
 const seen = () => { try { return !!sessionStorage.getItem('gm-intro'); } catch { return false; } };
-const mark = () => { try { sessionStorage.setItem('gm-intro', '1'); } catch {} };
+const mark = () => { try { mark(); } catch {} };
 
-// Preloader: counter 000 → 100, then the curtain opens in two halves.
+// One-time curtain on first load.
 export default function Intro() {
-  const [phase, setPhase] = useState(() => (seen() ? 'gone' : 'count'));
-  const [n, setN] = useState(0);
+  const [phase, setPhase] = useState(() => (seen() ? 'gone' : 'in'));
   useEffect(() => {
-    if (phase !== 'count') return;
+    if (phase !== 'in') return;
     mark();
-    const dur = 1700, t0 = performance.now();
-    let raf;
-    const step = now => {
-      const k = Math.min(1, (now - t0) / dur);
-      setN(Math.round(100 * (1 - Math.pow(1 - k, 3))));
-      if (k < 1) raf = requestAnimationFrame(step);
-      else setTimeout(() => setPhase('open'), 250);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [phase]);
-  useEffect(() => { if (phase === 'open') { const t = setTimeout(() => setPhase('gone'), 1300); return () => clearTimeout(t); } }, [phase]);
+    const a = setTimeout(() => setPhase('out'), 1500);
+    const b = setTimeout(() => setPhase('gone'), 2400);
+    return () => { clearTimeout(a); clearTimeout(b); };
+  }, []);
   if (phase === 'gone') return null;
   return (
-    <div className={`intro ${phase === 'open' ? 'is-open' : ''}`} aria-hidden="true">
-      <div className="intro-half top" />
-      <div className="intro-half bottom" />
-      <div className="intro-center">
-        <img src={logo} alt="" />
-        <span className="intro-word"><b>Giwa</b><i>Market</i></span>
-      </div>
-      <span className="intro-count">{String(n).padStart(3, '0')}</span>
-      <span className="intro-bar"><span style={{ transform: `scaleX(${n / 100})` }} /></span>
+    <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} aria-hidden="true">
+      <img src={logo} alt="" />
+      <span className="intro-line" />
     </div>
   );
 }

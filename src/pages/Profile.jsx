@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal.jsx';
-import Lines from '../components/Lines.jsx';
 import Avatar from '../components/Avatar.jsx';
 import NftCard from '../components/NftCard.jsx';
 import { IExt } from '../components/Icons.jsx';
@@ -40,7 +39,7 @@ export default function Profile() {
         <Avatar address={address} size={120} />
         <div className="prof-id">
           <span className="eyebrow">Collector</span>
-          <Lines as="h1" className="h1 prof-name" lines={[short(address)]} />
+          <h1 className="h1 prof-name">{short(address)}</h1>
           <div className="prof-links">
             <button className="btn-mini" onClick={copy}>{copied ? 'Copied' : 'Copy address'}</button>
             <a className="btn-mini" href={`${GIWA.blockExplorerUrls[0]}/address/${address}`} target="_blank" rel="noreferrer">Explorer <IExt width="12" height="12" /></a>

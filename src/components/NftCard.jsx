@@ -5,7 +5,7 @@ import { eth } from '../lib/data.js';
 export default function NftCard({ item, meta, action }) {
   return (
     <article className="nft">
-      <Link to={`/item/${item.slug}/${item.id}`} className="nft-art" data-cursor="View" aria-label={`${item.collection} #${item.id}`}>
+      <Link to={`/item/${item.slug}/${item.id}`} className="nft-art" aria-label={`${item.collection} #${item.id}`}>
         <Artwork seed={item.seed} />
       </Link>
       <div className="nft-body">
