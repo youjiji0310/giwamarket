@@ -41,11 +41,12 @@ export default function Item() {
       <Link to={`/collection/${slug}`} className="back">← {c.name}</Link>
       <div className="item">
         <Reveal className="item-art-wrap">
-          <div className="item-art" onMouseMove={onMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}
+          <div className="item-mat"><div className="item-art" data-cursor="Inspect" onMouseMove={onMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}
             style={{ transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}>
             <Artwork seed={c.seed * 100 + Number(id) % 50} label={`${c.name} #${id}`} />
             <span className="item-glare" style={{ background: `radial-gradient(circle at ${50 + tilt.y * 6}% ${50 - tilt.x * 6}%, rgba(255,255,255,.12), transparent 55%)` }} />
-          </div>
+          </div></div>
+          <p className="placard item-placard"><span className="placard-lot">Lot {String(id).padStart(4, '0')}</span><span className="placard-title">{c.name}, #{id}</span><span className="placard-meta">Generative work · ERC-721 · GIWA</span></p>
         </Reveal>
 
         <Reveal className="item-info" delay={120}>
