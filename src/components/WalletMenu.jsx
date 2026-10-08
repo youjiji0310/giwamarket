@@ -133,7 +133,7 @@ export default function WalletMenu() {
       <div className="wm">
         <Notifications />
         <span className="wm-sep" />
-        <Link to="/explore" className="icon-btn" aria-label="Trade"><ISwap /></Link>
+        <Link to="/activity" className="icon-btn" aria-label="Activity"><ISwap /></Link>
         <span className="wm-sep" />
         <button className="wm-bal" onClick={() => setModal('manage')}><IWallet /><span>{fmt(total)}</span></button>
         <span className="wm-sep" />
